@@ -171,7 +171,7 @@ namespace Rebus.Kafka
         /// with ErrorCode ErrorCode.Local_Application and thrown by the initiating call
         /// to Consume.
         /// </remarks>
-        /*public*/ event Action<IConsumer<TKey, TValue>, List<TopicPartition>> PartitionsAssigned;
+        public event Action<IConsumer<TKey, TValue>, List<TopicPartition>> PartitionsAssigned;
         protected void OnPartitionsAssigned(IConsumer<TKey, TValue> sender, List<TopicPartition> partitions)
         {
             if (PartitionsAssigned != null)
