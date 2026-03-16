@@ -22,12 +22,17 @@ namespace Rebus.Kafka
             if (string.IsNullOrEmpty(_bootstrapServers))
                 throw new ArgumentException("BootstrapServers it shouldn't be null!");
 
-            using (var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build())
+            using (var adminClient = CreateAdminClient())
             {
                 return adminClient.GetMetadata(TimeSpan.FromSeconds(100)).Topics
                     .Where(topicMetadata => topicMetadata.Error.Code != ErrorCode.UnknownTopicOrPart || topicMetadata.Error.Code == ErrorCode.Local_UnknownTopic)
                     .ToList();
             }
+        }
+
+        internal virtual IAdminClient CreateAdminClient()
+        {
+            return new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build();
         }
 
         /// <summary>
@@ -52,7 +57,7 @@ namespace Rebus.Kafka
             if (string.IsNullOrEmpty(_bootstrapServers))
                 throw new ArgumentException("BootstrapServers it shouldn't be null!");
 
-            using (var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build())
+            using (var adminClient = CreateAdminClient())
             {
                 var existingTopicMetadatas = adminClient.GetMetadata(TimeSpan.FromSeconds(100)).Topics
                     .Where(topicMetadata => topicMetadata.Error.Code != ErrorCode.UnknownTopicOrPart || topicMetadata.Error.Code == ErrorCode.Local_UnknownTopic)
@@ -104,7 +109,7 @@ namespace Rebus.Kafka
             if (string.IsNullOrEmpty(_bootstrapServers))
                 throw new ArgumentException("BootstrapServers it shouldn't be null!");
 
-            using (var adminClient = new AdminClientBuilder(new AdminClientConfig { BootstrapServers = _bootstrapServers }).Build())
+            using (var adminClient = CreateAdminClient())
             {
                 var existingTopicMetadatas = adminClient.GetMetadata(TimeSpan.FromSeconds(100)).Topics
                     .Where(topicMetadata => topicMetadata.Error.Code != ErrorCode.UnknownTopicOrPart || topicMetadata.Error.Code == ErrorCode.Local_UnknownTopic)

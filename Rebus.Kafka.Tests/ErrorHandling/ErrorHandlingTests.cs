@@ -49,7 +49,7 @@ namespace Rebus.Kafka.Tests.ErrorHandling
                         return bus.Publish(new RetriesMessage { MessageNumber = i });
                     }).ToArray();
 
-                Task.WaitAll(messages);
+                await Task.WhenAll(messages);
                 await Task.Delay(10000);
 
                 Assert.Equal(sendAmount + (maxDeliveryAttempts - 1) * 2, Counter.Amount);
@@ -128,7 +128,7 @@ namespace Rebus.Kafka.Tests.ErrorHandling
                         Interlocked.Add(ref sendAmount, i);
                         return bus.Publish(new RetriesMessage { MessageNumber = i });
                     }).ToArray();
-                Task.WaitAll(messages);
+                await Task.WhenAll(messages);
                 await Task.Delay(10000);
                 messages = Enumerable.Range(MessageCount + 1, MessageCount)
                     .Select(i =>
@@ -136,7 +136,7 @@ namespace Rebus.Kafka.Tests.ErrorHandling
                         Interlocked.Add(ref sendAmount, i);
                         return bus.Publish(new RetriesMessage { MessageNumber = i });
                     }).ToArray();
-                Task.WaitAll(messages);
+                await Task.WhenAll(messages);
                 await Task.Delay(10000);
                 messages = Enumerable.Range(MessageCount * 2 + 1, MessageCount)
                     .Select(i =>
@@ -144,7 +144,7 @@ namespace Rebus.Kafka.Tests.ErrorHandling
                         Interlocked.Add(ref sendAmount, i);
                         return bus.Publish(new RetriesMessage { MessageNumber = i });
                     }).ToArray();
-                Task.WaitAll(messages);
+                await Task.WhenAll(messages);
                 await Task.Delay(10000);
                 Assert.Equal(sendAmount + ((maxDelivery + 1 /*Handle IFailed*/) * 3 /*restarts*/ - 1) * 2, Counter.Amount);
             }
