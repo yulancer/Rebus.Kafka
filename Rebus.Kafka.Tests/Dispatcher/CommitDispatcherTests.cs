@@ -30,7 +30,7 @@ namespace Rebus.Kafka.Tests.Dispatcher
             
             var result = _dispatcher.AppendMessage(message, tpo);
             
-            Assert.True(result.Sucsess);
+            Assert.True(result.Success);
             Assert.Single(_dispatcher._messageInfos);
         }
 
@@ -43,7 +43,7 @@ namespace Rebus.Kafka.Tests.Dispatcher
             _dispatcher.AppendMessage(message, tpo);
             var result = _dispatcher.AppendMessage(message, tpo);
             
-            Assert.False(result.Sucsess);
+            Assert.False(result.Success);
         }
 
         [Fact]
@@ -55,7 +55,7 @@ namespace Rebus.Kafka.Tests.Dispatcher
             
             var result = _dispatcher.Completing(message);
             
-            Assert.True(result.Sucsess);
+            Assert.True(result.Success);
             // Since CommitPeriod = 1, it might have already tried to commit and remove it if successful
         }
 
@@ -68,7 +68,7 @@ namespace Rebus.Kafka.Tests.Dispatcher
             
             var result = _dispatcher.Reprocessing(message);
             
-            Assert.True(result.Sucsess);
+            Assert.True(result.Success);
             Assert.Equal(MessageProcessingStatuses.Reprocess, _dispatcher._messageInfos["msg1"].Status);
         }
 
