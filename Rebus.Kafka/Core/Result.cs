@@ -2,16 +2,16 @@
 {
     internal class Result
     {
-        internal bool Sucsess { get; }
-        internal bool Failure => !Sucsess;
+        internal bool Success { get; }
+        internal bool Failure => !Success;
         internal string Reason { get; }
 
         internal static Result Ok() => new Result(true, null);
         internal static Result Fail(string reason) => new Result(false, reason);
 
-        private Result(bool sucsess, string reason)
+        private Result(bool success, string reason)
         {
-            Sucsess = sucsess;
+            Success = success;
             Reason = reason;
         }
     }

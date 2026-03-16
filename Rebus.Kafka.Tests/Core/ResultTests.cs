@@ -9,7 +9,7 @@ namespace Rebus.Kafka.Tests.Core
         public void Ok_ReturnsSuccess()
         {
             var result = Result.Ok();
-            Assert.True(result.Sucsess);
+            Assert.True(result.Success);
             Assert.False(result.Failure);
             Assert.Null(result.Reason);
         }
@@ -19,7 +19,7 @@ namespace Rebus.Kafka.Tests.Core
         {
             const string reason = "test reason";
             var result = Result.Fail(reason);
-            Assert.False(result.Sucsess);
+            Assert.False(result.Success);
             Assert.True(result.Failure);
             Assert.Equal(reason, result.Reason);
         }
